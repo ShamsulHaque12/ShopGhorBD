@@ -9,7 +9,7 @@ const WHATSAPP_NUMBER = "8801631402997";
 const CURRENCY = "৳";
 
 /* ====== PRODUCTS LIST ====== */
-const PRODUCTS = [
+let PRODUCTS = [
   {
     id: 1,
     cat: "fashion",
@@ -151,6 +151,41 @@ const PRODUCTS = [
     desc: "প্রিমিয়াম মেমোরি ফোম কুশন, অ্যাক্টিভ নয়েজ ক্যান্সেলেশন এবং ৪০ ঘণ্টার লং ব্যাটারি লাইফ।"
   }
 ];
+
+// Dynamically sync products created or updated by Admin in the Dashboard
+function syncAdminProducts() {
+  try {
+    const adminData = localStorage.getItem("shopghor_bd_admin_products_v1");
+    if (adminData) {
+      const adminProducts = JSON.parse(adminData);
+      if (Array.isArray(adminProducts) && adminProducts.length > 0) {
+        const adminMapped = adminProducts.map(ap => {
+          const cat = (ap.category || "fashion").toLowerCase();
+          return {
+            id: ap.id,
+            cat: cat.includes("elect") ? "electronics" : "fashion",
+            name: ap.title || ap.name,
+            banglaName: ap.banglaName || ap.title || ap.name,
+            price: Number(ap.salePrice || ap.price || 0),
+            old: Number(ap.regularPrice || ap.old || 0),
+            rating: Number(ap.rating || 5.0),
+            reviews: Number(ap.reviewsCount || ap.reviews || 1),
+            img: ap.image || ap.img || "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600",
+            sizes: ap.sizes || (cat.includes("elect") ? ["Standard"] : ["M", "L", "XL"]),
+            badge: ap.badge || (ap.tags && ap.tags[0]) || "নতুন কালেকশন",
+            desc: ap.description || ap.desc || "১০০% প্রিমিয়াম কোয়ালিটি পণ্য।"
+          };
+        });
+        const adminIds = new Set(adminMapped.map(p => String(p.id)));
+        const nonDuplicateSeed = PRODUCTS.filter(p => !adminIds.has(String(p.id)));
+        PRODUCTS = [...adminMapped, ...nonDuplicateSeed];
+      }
+    }
+  } catch (err) {
+    console.warn("Could not sync admin products:", err);
+  }
+}
+syncAdminProducts();
 
 /* ====== REVIEWS & RATINGS STATE ====== */
 let productRatings = JSON.parse(localStorage.getItem("shopghor_product_ratings") || "{}");
@@ -779,9 +814,178 @@ function showOrderSuccess(data) {
   }
 }
 
+/* ====== ADMIN PORTAL & AUTHENTICATION ====== */
+const ADMIN_CREDENTIALS = {
+  validEmails: ["admin@shopghorbd.com", "admin@shopghor.com", "admin"],
+  validPasswords: ["admin123", "admin", "123456", "shopghor2026"]
+};
+
+function openAdminLoginModal() {
+  closeAll();
+  const overlay = $("#adminLoginOverlay");
+  if (!overlay) return;
+
+  const alertBox = $("#adminLoginAlert");
+  if (alertBox) alertBox.style.display = "none";
+
+  const form = $("#adminLoginForm");
+  if (form) form.classList.remove("shake-admin-form");
+
+  const emailInput = $("#adminEmailInput");
+  const passInput = $("#adminPasswordInput");
+  const remembered = localStorage.getItem("shopghor_admin_remembered_email");
+
+  if (emailInput) {
+    emailInput.value = remembered || "admin@shopghorbd.com";
+  }
+
+  if (passInput) {
+    passInput.value = "";
+    passInput.type = "password";
+  }
+
+  // Reset toggle eye icons
+  const eyeOpen = $("#eyeIconOpen");
+  const eyeClose = $("#eyeIconClose");
+  if (eyeOpen) eyeOpen.style.display = "block";
+  if (eyeClose) eyeClose.style.display = "none";
+
+  // Reset submit button state
+  const submitBtn = $("#adminLoginSubmitBtn");
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    const txt = submitBtn.querySelector(".btn-text");
+    const spin = submitBtn.querySelector(".btn-spinner");
+    if (txt) txt.style.display = "inline-flex";
+    if (spin) spin.style.display = "none";
+  }
+
+  overlay.hidden = false;
+  document.body.classList.add("modal-open");
+
+  setTimeout(() => {
+    if (remembered && passInput) {
+      passInput.focus();
+    } else if (emailInput) {
+      emailInput.focus();
+    }
+  }, 100);
+}
+
+function handleAdminLogin(e) {
+  e.preventDefault();
+  const emailInput = $("#adminEmailInput");
+  const passInput = $("#adminPasswordInput");
+  const rememberCheckbox = $("#adminRememberMe");
+  const alertBox = $("#adminLoginAlert");
+  const alertMsg = $("#adminAlertMsg");
+  const form = $("#adminLoginForm");
+  const submitBtn = $("#adminLoginSubmitBtn");
+
+  const email = (emailInput?.value || "").trim().toLowerCase();
+  const password = (passInput?.value || "").trim();
+
+  // Validate credentials
+  const isValidEmail = ADMIN_CREDENTIALS.validEmails.includes(email);
+  const isValidPass = ADMIN_CREDENTIALS.validPasswords.includes(password);
+
+  if (!email || !password) {
+    if (alertBox) alertBox.style.display = "flex";
+    if (alertMsg) alertMsg.textContent = "অনুগ্রহ করে ইমেইল এবং পাসওয়ার্ড উভয়ই লিখুন!";
+    if (form) {
+      form.classList.remove("shake-admin-form");
+      void form.offsetWidth;
+      form.classList.add("shake-admin-form");
+    }
+    return;
+  }
+
+  if (!isValidEmail || !isValidPass) {
+    if (alertBox) alertBox.style.display = "flex";
+    if (alertMsg) alertMsg.textContent = "ভুল ইমেইল অথবা পাসওয়ার্ড! ডেমো একাউন্ট ব্যবহার করুন।";
+    if (form) {
+      form.classList.remove("shake-admin-form");
+      void form.offsetWidth;
+      form.classList.add("shake-admin-form");
+    }
+    if (passInput) {
+      passInput.focus();
+      passInput.select();
+    }
+    return;
+  }
+
+  // Success flow
+  if (alertBox) alertBox.style.display = "none";
+
+  // Remember email if requested
+  if (rememberCheckbox && rememberCheckbox.checked) {
+    localStorage.setItem("shopghor_admin_remembered_email", email);
+  } else {
+    localStorage.removeItem("shopghor_admin_remembered_email");
+  }
+
+  // Save session
+  const sessionData = {
+    email,
+    name: "Admin Sujon",
+    role: "Super Admin",
+    loginAt: new Date().toISOString(),
+    isLoggedIn: true
+  };
+  sessionStorage.setItem("shopghor_admin_session", JSON.stringify(sessionData));
+  localStorage.setItem("shopghor_admin_logged_in", "true");
+
+  // Loading button state
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    const txt = submitBtn.querySelector(".btn-text");
+    const spin = submitBtn.querySelector(".btn-spinner");
+    if (txt) txt.style.display = "none";
+    if (spin) spin.style.display = "inline-block";
+  }
+
+  toast("✅ লগইন সফল হয়েছে! অ্যাডমিন ড্যাশবোর্ডে প্রবেশ করা হচ্ছে...");
+
+  setTimeout(() => {
+    // Redirect to the professional admin dashboard
+    window.location.href = "admin/index.html";
+  }, 650);
+}
+
+function quickFillAdmin() {
+  const emailInput = $("#adminEmailInput");
+  const passInput = $("#adminPasswordInput");
+  const alertBox = $("#adminLoginAlert");
+
+  if (emailInput) emailInput.value = "admin@shopghorbd.com";
+  if (passInput) passInput.value = "admin123";
+  if (alertBox) alertBox.style.display = "none";
+
+  toast("🔑 ডেমো ক্রেডেনশিয়াল ফিল করা হয়েছে!");
+  if (passInput) passInput.focus();
+}
+
+function toggleAdminPassword() {
+  const passInput = $("#adminPasswordInput");
+  const eyeOpen = $("#eyeIconOpen");
+  const eyeClose = $("#eyeIconClose");
+  if (!passInput) return;
+
+  if (passInput.type === "password") {
+    passInput.type = "text";
+    if (eyeOpen) eyeOpen.style.display = "none";
+    if (eyeClose) eyeClose.style.display = "block";
+  } else {
+    passInput.type = "password";
+    if (eyeOpen) eyeOpen.style.display = "block";
+    if (eyeClose) eyeClose.style.display = "none";
+  }
+}
+
 /* ====== UI UTILITIES ====== */
 function closeAll() {
-  ["#pOverlay", "#cOverlay", "#sOverlay", "#rOverlay", "#drawer"].forEach(sel => {
+  ["#pOverlay", "#cOverlay", "#sOverlay", "#rOverlay", "#adminLoginOverlay", "#drawer"].forEach(sel => {
     const el = $(sel);
     if (el) el.hidden = true;
   });
@@ -981,6 +1185,35 @@ function bindEvents() {
 
   // Order submission
   $("#orderForm").onsubmit = submitOrder;
+
+  // Admin Login Event Handlers
+  const openAdminBtn = $("#openAdminLogin");
+  if (openAdminBtn) openAdminBtn.onclick = openAdminLoginModal;
+
+  const openAdminNavBtn = $("#openAdminLoginNav");
+  if (openAdminNavBtn) openAdminNavBtn.onclick = openAdminLoginModal;
+
+  const quickFillBtn = $("#adminQuickFillBtn");
+  if (quickFillBtn) quickFillBtn.onclick = quickFillAdmin;
+
+  const togglePassBtn = $("#adminTogglePassword");
+  if (togglePassBtn) togglePassBtn.onclick = toggleAdminPassword;
+
+  const adminForm = $("#adminLoginForm");
+  if (adminForm) adminForm.onsubmit = handleAdminLogin;
+
+  const forgotBtn = $("#adminPassHelp");
+  if (forgotBtn) {
+    forgotBtn.onclick = () => {
+      toast("ℹ️ ডেমো ইমেইল: admin@shopghorbd.com | পাসওয়ার্ড: admin123");
+    };
+  }
+
+  // Automatic trigger via URL parameter (e.g. ?admin=1 or ?openAdmin=true)
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get("admin") || urlParams.get("openAdmin")) {
+    setTimeout(openAdminLoginModal, 300);
+  }
 
   // Global close on click outside or [data-close]
   document.addEventListener("click", e => {

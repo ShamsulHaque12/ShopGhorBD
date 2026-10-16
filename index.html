@@ -32,6 +32,11 @@
         <a href="https://wa.me/8801631402997" target="_blank" rel="noopener" class="top-link">WhatsApp</a>
         <span class="sep">|</span>
         <a href="https://www.facebook.com/ShopGhorBD24/" target="_blank" rel="noopener" class="top-link">Facebook Page</a>
+        <span class="sep">|</span>
+        <button type="button" id="openAdminLogin" class="top-link top-admin-link" title="ShopGhor BD অ্যাডমিন পোর্টাল" aria-label="Admin Portal">
+          <svg class="admin-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span>Admin</span>
+        </button>
       </div>
     </div>
   </div>
@@ -57,6 +62,11 @@
 
       <!-- Header Action Buttons -->
       <div class="nav-actions">
+        <button type="button" id="openAdminLoginNav" class="btn-icon btn-admin-header" title="Admin Portal (অ্যাডমিন লগইন)" aria-label="Admin Login">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="3"/></svg>
+          <span class="admin-badge-dot"></span>
+        </button>
+
         <a href="https://www.facebook.com/ShopGhorBD24/" target="_blank" rel="noopener" class="btn-icon" title="Facebook Page">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         </a>
@@ -578,6 +588,99 @@
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             আপনার দেওয়া স্টার এবং মন্তব্যটি স্বয়ংক্রিয়ভাবে এই প্রোডাক্ট পেজে এবং গড় রেটিংয়ে যোগ হবে।
           </p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       Admin Portal Login Modal Popup
+       =================================================== -->
+  <div class="overlay" id="adminLoginOverlay" hidden>
+    <div class="modal modal-admin-login" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
+      <button type="button" class="modal-close" data-close aria-label="Close admin login modal">&times;</button>
+      
+      <!-- Modal Header -->
+      <div class="admin-login-header">
+        <div class="admin-shield-badge">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="10" r="3"/><path d="M7 17a5 5 0 0 1 10 0"/></svg>
+        </div>
+        <div class="admin-header-text">
+          <div class="admin-pill-status">
+            <span class="pulse-dot"></span>
+            <span>Security Protected Portal</span>
+          </div>
+          <h2 id="adminModalTitle">অ্যাডমিন পোর্টাল লগইন</h2>
+          <p>ShopGhor BD কনসোল ও প্রোডাক্ট ড্যাশবোর্ডে প্রবেশ করুন</p>
+        </div>
+      </div>
+
+      <!-- Error Alert Message -->
+      <div id="adminLoginAlert" class="admin-alert-box" style="display:none;" role="alert">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <span id="adminAlertMsg">ইমেইল অথবা পাসওয়ার্ড সঠিক নয়!</span>
+      </div>
+
+      <!-- Demo Credentials Quick Fill Banner -->
+      <div class="admin-quick-fill-card" id="adminQuickFillBtn" role="button" tabindex="0" title="ক্লিক করলেই অটো-ফিল হবে">
+        <div class="quick-fill-left">
+          <span class="key-icon">🔑</span>
+          <div class="quick-fill-details">
+            <span class="qf-title">অ্যাডমিন ডেমো একাউন্ট (1-Click Fill)</span>
+            <span class="qf-sub">Email: <b>admin@shopghorbd.com</b> | Pass: <b>admin123</b></span>
+          </div>
+        </div>
+        <span class="qf-badge">Auto Fill</span>
+      </div>
+
+      <!-- Login Form -->
+      <form id="adminLoginForm" class="admin-login-form" novalidate>
+        <!-- Email Field -->
+        <div class="input-group-pro">
+          <label for="adminEmailInput">অ্যাডমিন ইমেইল <span class="req">*</span></label>
+          <div class="input-icon-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <input id="adminEmailInput" name="email" type="email" placeholder="admin@shopghorbd.com" autocomplete="email" required>
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="input-group-pro">
+          <div class="label-with-tag">
+            <label for="adminPasswordInput">পাসওয়ার্ড <span class="req">*</span></label>
+            <span class="opt-tag" id="adminPassHelp">সিকিউরড</span>
+          </div>
+          <div class="input-icon-wrap password-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <input id="adminPasswordInput" name="password" type="password" placeholder="••••••••" autocomplete="current-password" required>
+            <button type="button" id="adminTogglePassword" class="btn-toggle-eye" aria-label="Toggle Password Visibility" title="পাসওয়ার্ড দেখুন/লুকান">
+              <svg id="eyeIconOpen" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg id="eyeIconClose" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Remember Me Checkbox -->
+        <div class="admin-options-row">
+          <label class="admin-checkbox-label">
+            <input type="checkbox" id="adminRememberMe" checked>
+            <span>ব্রাউজারে তথ্য মনে রাখুন (Remember Me)</span>
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="adminLoginSubmitBtn" class="btn btn-primary btn-block btn-admin-submit">
+          <span class="btn-text">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            ড্যাশবোর্ডে প্রবেশ করুন (Enter Dashboard)
+          </span>
+          <span class="btn-spinner" style="display:none;"></span>
+        </button>
+
+        <!-- Security Badge Footer Note -->
+        <div class="admin-modal-footer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span>ShopGhor BD নিরাপদ অ্যাডমিন ম্যানেজমেন্ট কনসোল।</span>
         </div>
       </form>
     </div>

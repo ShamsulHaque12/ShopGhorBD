@@ -1,0 +1,18 @@
+{
+  "name": "shopghor-bd-dashboard",
+  "version": "1.0.0",
+  "description": "Professional Admin Dashboard for ShopGhor BD e-commerce platform built with HTML, CSS, and Vanilla JavaScript.",
+  "scripts": {
+    "start": "npx -y serve . -p 3000",
+    "dev": "npx -y live-server --port=3000 ."
+  },
+  "keywords": [
+    "admin-dashboard",
+    "ecommerce",
+    "shopghor-bd",
+    "product-management",
+    "inventory"
+  ],
+  "author": "ShopGhor BD Team",
+  "license": "MIT"
+}

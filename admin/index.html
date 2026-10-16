@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopGhor BD - অ্যাডমিন প্রোডাক্ট ম্যানেজমেন্ট</title>
+  <meta name="description" content="ShopGhor BD অ্যাডমিন প্যানেল - সহজে নতুন প্রোডাক্ট যুক্ত করুন ও ম্যানেজ করুন।">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Simple Clean Header -->
+  <header class="admin-top-nav">
+    <div class="nav-max-wrap">
+      <a href="../index.html" class="brand-group" title="ShopGhor BD Home">
+        <div class="brand-logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </div>
+        <div class="brand-titles">
+          <h1>ShopGhor<span class="accent-text">BD</span></h1>
+          <span class="admin-tag">অ্যাডমিন প্যানেল</span>
+        </div>
+      </a>
+
+      <div class="nav-right-actions">
+        <!-- Return to Storefront -->
+        <a href="../index.html" class="btn-store-link" title="ওয়েবসাইটে ফিরে যান">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>ওয়েবসাইট দেখুন</span>
+        </a>
+
+        <!-- Logout Button -->
+        <button type="button" id="adminLogoutBtn" class="btn-logout" title="লগআউট করুন">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span>লগআউট</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="admin-content-wrap">
+    
+    <!-- Hero Title -->
+    <div class="page-heading-card">
+      <div class="heading-badge">
+        <span class="pulse-point"></span>
+        <span>Product Manager</span>
+      </div>
+      <h2>নতুন প্রোডাক্ট যুক্ত করুন (Add New Product)</h2>
+      <p>নিচের ফর্মে প্রোডাক্টের নাম, ক্যাটাগরি, মূল্য এবং ছবি দিয়ে সহজে শপে প্রোডাক্ট যুক্ত করুন।</p>
+    </div>
+
+    <!-- Direct Add Product Form Card -->
+    <section class="admin-form-card">
+      <div class="card-top-header">
+        <div class="ct-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </div>
+        <div class="ct-title">
+          <h3>প্রোডাক্ট এন্ট্রি ফর্ম (Product Information)</h3>
+          <span>সবগুলো প্রয়োজনীয় তথ্য পূরণ করে 'পণ্য শপে যোগ করুন' বাটনে চাপ দিন</span>
+        </div>
+      </div>
+
+      <form id="directProductForm" novalidate>
+        <div class="form-grid-layout">
+
+          <!-- Product Title / Name -->
+          <div class="field-item full-width">
+            <label for="pTitle" class="form-label">
+              <span>প্রোডাক্টের নাম (Product Name / Title) <b class="req">*</b></span>
+              <span class="hint-text">আকর্ষণীয় ও স্পষ্ট নাম লিখুন</span>
+            </label>
+            <div class="input-with-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+              <input type="text" id="pTitle" placeholder="যেমন: প্রিমিয়াম ড্রপ-শোল্ডার কটন টি-শার্ট অথবা TWS Wireless Earbuds" required>
+            </div>
+          </div>
+
+          <!-- Category -->
+          <div class="field-item">
+            <label for="pCategory" class="form-label">
+              <span>ক্যাটাগরি (Category) <b class="req">*</b></span>
+            </label>
+            <div class="input-with-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+              <select id="pCategory" required>
+                <option value="Fashion">ফ্যাশন ও পোশাক (Fashion & Apparel)</option>
+                <option value="Electronics">ইলেকট্রনিক্স ও গ্যাজেট (Electronics & Gadgets)</option>
+                <option value="Accessories">ঘড়ি ও এক্সেসরিজ (Accessories)</option>
+                <option value="Groceries">গ্রোসারি ও ফুড (Groceries & Foods)</option>
+                <option value="Home & Kitchen">হোম ও কিচেন (Home & Kitchen)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Promotional Badge / Tag -->
+          <div class="field-item">
+            <label for="pBadge" class="form-label">
+              <span>অফার ব্যাজ / ট্যাগ (Tag / Badge)</span>
+            </label>
+            <div class="input-with-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <select id="pBadge">
+                <option value="হট ডিল">🔥 হট ডিল (Hot Deal)</option>
+                <option value="বেস্ট সেলার">🏆 বেস্ট সেলার (Best Seller)</option>
+                <option value="নতুন অফার">✨ নতুন অফার (New Arrival)</option>
+                <option value="মেগা অফার">⚡ মেগা অফার (Mega Deal)</option>
+                <option value="১০০% প্রিমিয়াম">⭐ ১০০% প্রিমিয়াম (Premium)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Regular Price (MRP) -->
+          <div class="field-item">
+            <label for="pRegularPrice" class="form-label">
+              <span>আগের / রেগুলার মূল্য (Regular Price)</span>
+              <span class="hint-text">কাটা থাকবে (Strike-through)</span>
+            </label>
+            <div class="input-with-icon has-currency">
+              <span class="currency-prefix">৳</span>
+              <input type="number" id="pRegularPrice" placeholder="যেমন: 850" min="0">
+            </div>
+          </div>
+
+          <!-- Sale / Selling Price -->
+          <div class="field-item">
+            <label for="pSalePrice" class="form-label">
+              <span>বিক্রয় মূল্য (Sale Price) <b class="req">*</b></span>
+              <span class="hint-text">কাস্টমারকে এই মূল্য দিতে হবে</span>
+            </label>
+            <div class="input-with-icon has-currency">
+              <span class="currency-prefix">৳</span>
+              <input type="number" id="pSalePrice" placeholder="যেমন: 550" min="1" required>
+            </div>
+          </div>
+
+          <!-- Stock Quantity -->
+          <div class="field-item">
+            <label for="pStock" class="form-label">
+              <span>স্টক পরিমাণ (Stock Quantity)</span>
+            </label>
+            <div class="input-with-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7.5 4.27 9 5.15"></path><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>
+              <input type="number" id="pStock" placeholder="20" min="1" value="25">
+            </div>
+          </div>
+
+          <!-- Sizes / Variants -->
+          <div class="field-item">
+            <label for="pSizes" class="form-label">
+              <span>সাইজ বা কালার ভ্যারিয়েন্ট (কমা দিয়ে লিখুন)</span>
+            </label>
+            <div class="input-with-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path></svg>
+              <input type="text" id="pSizes" placeholder="যেমন: M, L, XL, XXL অথবা Black, White">
+            </div>
+          </div>
+
+          <!-- Product Image & Live Preview -->
+          <div class="field-item full-width">
+            <label class="form-label">
+              <span>প্রোডাক্টের ছবি (Product Image) <b class="req">*</b></span>
+              <span class="hint-text">অনলাইন ইমেজ লিংক দিন অথবা ডিভাইস থেকে ছবি আপলোড করুন</span>
+            </label>
+            <div class="image-uploader-card">
+              <div class="img-preview-frame">
+                <img id="imgPreview" src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600" alt="Preview">
+                <span class="preview-badge">লাইভ প্রিভিউ</span>
+              </div>
+              <div class="img-inputs-stack">
+                <input type="url" id="pImageUrl" placeholder="https://images.unsplash.com/photo-..." value="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600" required>
+                
+                <div class="file-upload-row">
+                  <label class="btn-file-picker">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    <span>ডিভাইস থেকে ছবি আপলোড করুন</span>
+                    <input type="file" id="pImageFile" accept="image/*" style="display:none;">
+                  </label>
+                  <span class="preset-label">অথবা দ্রুত স্যাম্পল ছবি নির্বাচন করুন:</span>
+                </div>
+
+                <div class="quick-img-pills">
+                  <button type="button" class="preset-btn active" data-img="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600">👕 টি-শার্ট</button>
+                  <button type="button" class="preset-btn" data-img="https://images.unsplash.com/photo-1542272604-780c96856592?w=600">👖 ডেনিম জিন্স</button>
+                  <button type="button" class="preset-btn" data-img="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600">👟 স্নিকার্স</button>
+                  <button type="button" class="preset-btn" data-img="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600">⌚ স্মার্টওয়াচ</button>
+                  <button type="button" class="preset-btn" data-img="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600">🎧 ইয়ারবাডস</button>
+                  <button type="button" class="preset-btn" data-img="https://images.unsplash.com/photo-1627123424574-724758594e93?w=600">👛 লেদার ওয়ালেট</button>
+                  <button type="button" class="preset-btn" data-img="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600">🕶️ সানগ্লাস</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="field-item full-width">
+            <label for="pDesc" class="form-label">
+              <span>প্রোডাক্টের বিবরণ (Description)</span>
+              <span class="hint-text">কাপড়ের কোয়ালিটি, ফেব্রিক, ওয়ারেন্টি ইত্যাদি</span>
+            </label>
+            <textarea id="pDesc" rows="3" placeholder="১০০% প্রিমিয়াম এক্সপোর্ট কোয়ালিটি পণ্য। অত্যন্ত আরামদায়ক ও টেকসই..."></textarea>
+          </div>
+
+        </div>
+
+        <!-- Form Submit Button -->
+        <div class="form-action-bar">
+          <button type="submit" id="submitProductBtn" class="btn-publish-product">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>পণ্য শপে যোগ করুন (Add Product to Store)</span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Currently Added Products Section -->
+    <section class="products-list-card">
+      <div class="list-card-header">
+        <div class="list-title-wrap">
+          <h3>শপের প্রোডাক্ট তালিকা (<span id="totalProductsCount">0</span>টি পণ্য)</h3>
+          <p>আপনার যুক্ত করা সকল প্রোডাক্টের তালিকা নিচে দেখুন ও প্রয়োজনে ডিলিট করুন।</p>
+        </div>
+        <div class="list-header-right">
+          <a href="../index.html" class="btn-live-store" target="_blank" rel="noopener">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <span>লাইভ শপে দেখুন</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="table-scroll-container">
+        <table class="compact-admin-table">
+          <thead>
+            <tr>
+              <th>ছবি ও নাম</th>
+              <th>ক্যাটাগরি</th>
+              <th>মূল্য (বিক্রয় / MRP)</th>
+              <th>ট্যাগ / ব্যাজ</th>
+              <th>স্টক</th>
+              <th style="text-align: right;">অ্যাকশন</th>
+            </tr>
+          </thead>
+          <tbody id="adminProductsTableBody">
+            <!-- Dynamic rows will be inserted here -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast Notification Box -->
+  <div id="toast" class="toast-box" role="status"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
